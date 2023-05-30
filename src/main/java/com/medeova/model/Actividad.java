@@ -22,7 +22,7 @@ public class Actividad implements Serializable
     private TipoActividad tipoActividad;
 	
 	@JoinColumn(name = "id_tema", referencedColumnName = "id_tema")
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne
     private Tema tema;
 	
 	@Column(name = "titulo")
