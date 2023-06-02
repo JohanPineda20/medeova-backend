@@ -17,7 +17,7 @@ public class UnidadController
 	@Autowired
 	private UnidadService service;
 	
-	@GetMapping
+	@GetMapping()
 	public ResponseEntity<?> getAll() {	
 		return ResponseEntity.ok(service.listar());
 	}

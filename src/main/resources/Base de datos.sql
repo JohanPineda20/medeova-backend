@@ -296,6 +296,8 @@ CREATE TABLE IF NOT EXISTS `usuario` (
   `sdo_apell` varchar(80) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
   `email` varchar(100) NOT NULL,
   `clave` varchar(100) NOT NULL,
+  `created` datetime DEFAULT NULL,
+  `enabled` bit(1) NOT NULL,
   PRIMARY KEY (`codigo`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
@@ -308,6 +310,28 @@ INSERT INTO `usuario` (`codigo`, `per_nom`, `sdo_nom`, `per_apell`, `sdo_apell`,
 ('1155800', 'Juan', 'Carlos', 'Zapata', 'Garcia', 'docente@ufps.edu.co', '12345');
 
 -- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `verification_token`
+--
+
+--
+-- Estructura de tabla para la tabla `verification_token`
+--
+DROP TABLE IF EXISTS `verification_token`;
+CREATE TABLE `verification_token` (
+    `id` bigint(20) NOT NULL AUTO_INCREMENT,
+    `fecha_expiracion` datetime DEFAULT NULL,
+    `token` varchar(255) DEFAULT NULL,
+    `usuario_id` varchar(15) DEFAULT NULL,
+     PRIMARY KEY (`id`),
+     KEY `usuario_id` (`usuario_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+
+
+-- -----------------------------------------------------------
+
 
 --
 -- Estructura de tabla para la tabla `voto`

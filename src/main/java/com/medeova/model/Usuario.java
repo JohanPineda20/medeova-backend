@@ -1,6 +1,7 @@
 package com.medeova.model;
 
 import java.io.Serializable;
+import java.time.Instant;
 import javax.persistence.*;
 import lombok.*;
 
@@ -30,6 +31,12 @@ public class Usuario implements Serializable {
     
     @Column(name = "clave")
     private String clave;
+
+    @Column(name = "created")
+    private Instant created;
+
+    @Column(name = "enabled")
+    private boolean enabled;
     
     private static final long serialVersionUID = 1L;	
 }
