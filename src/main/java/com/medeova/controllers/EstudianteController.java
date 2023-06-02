@@ -6,48 +6,40 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
 
-import com.medeova.model.Unidad;
-import com.medeova.service.ActividadService;
-import com.medeova.service.DetalleActividadService;
-import com.medeova.service.UnidadService;
+import com.medeova.model.Usuario;
+import com.medeova.service.EstudianteService;
 
 @RestController
-@RequestMapping("/api/unidad")
+@RequestMapping("/api/estudiante")
 @CrossOrigin(origins = "*")
-public class UnidadController 
+public class EstudianteController 
 {
 	@Autowired
-	private UnidadService service;
+	private EstudianteService service;
 	
-	@Autowired
-	private ActividadService actService;
 	
-	@Autowired
-	private DetalleActividadService detService;
-	
-
 	@GetMapping(path = "/{id}/actividades")
-	public ResponseEntity<?> getActivities(@PathVariable Integer id){
-		Unidad x = service.encontrar(id);
-		if(x == null) 
+	public ResponseEntity<?> getActivities(@PathVariable String id) {
+		Usuario x = service.encontrar(id);
+		if(x == null)
 			return new ResponseEntity<ObjectError>(new ObjectError("id","No existe el id"), HttpStatus.NOT_FOUND);
-		return ResponseEntity.ok(actService.listarByUnidad(id));
+		return ResponseEntity.ok(service.getActividadesDetalle(id));
 	}
 	
-	@GetMapping(path = "/{id}/actividades/completadas")
-	public ResponseEntity<?> getActivitiesCompleted(@PathVariable Integer id){
-		Unidad x = service.encontrar(id);
-		if(x == null) 
+	@GetMapping(path = "/{id}/progreso")
+	public ResponseEntity<?> getProgreso(@PathVariable String id) {
+		Usuario x = service.encontrar(id);
+		if(x == null)
 			return new ResponseEntity<ObjectError>(new ObjectError("id","No existe el id"), HttpStatus.NOT_FOUND);
-		return ResponseEntity.ok(actService.listarCompletadasByUnidad(id));
+		return ResponseEntity.ok(service.getProgreso(id));
 	}
 	
-	@GetMapping(path = "/{id}/actividades/avg")
-	public ResponseEntity<?> getActivitiesAvg(@PathVariable Integer id){
-		Unidad x = service.encontrar(id);
-		if(x == null) 
+	@GetMapping(path = "/{codigo}/progreso/{id}")
+	public ResponseEntity<?> getProgreso(@PathVariable String codigo, @PathVariable Integer id) {
+		Usuario x = service.encontrar(codigo);
+		if(x == null)
 			return new ResponseEntity<ObjectError>(new ObjectError("id","No existe el id"), HttpStatus.NOT_FOUND);
-		return ResponseEntity.ok(detService.getPromedioByUnidad(id));
+		return ResponseEntity.ok(service.getProgresoByUnidad(codigo, id));
 	}
 	
 	@GetMapping
@@ -56,32 +48,31 @@ public class UnidadController
 	}
 	
 	@GetMapping(path = "/{id}")
-	public ResponseEntity<?> get(@PathVariable Integer id) {
-		Unidad x = service.encontrar(id);
+	public ResponseEntity<?> get(@PathVariable String id) {
+		Usuario x = service.encontrar(id);
 		if(x == null) 
 			return new ResponseEntity<ObjectError>(new ObjectError("id","No existe el id"), HttpStatus.NOT_FOUND);		
 		return ResponseEntity.ok(x);
 	}
 	
 	@PostMapping
-	public ResponseEntity<?> guardar(@RequestBody Unidad nuevo) {
+	public ResponseEntity<?> guardar(@RequestBody Usuario nuevo) {
 		service.guardar(nuevo);
 		return ResponseEntity.ok(nuevo);
 	}
 	
 	@PostMapping(path = "/{id}")
-	public ResponseEntity<?> editar(@PathVariable Integer id, @RequestBody Unidad nuevo) {
-		Unidad x = service.encontrar(id);
+	public ResponseEntity<?> editar(@PathVariable String id) {
+		Usuario x = service.encontrar(id);
 		if(x == null)
 			return new ResponseEntity<ObjectError>(new ObjectError("id","No existe el id"), HttpStatus.NOT_FOUND);
-		
 		service.guardar(x);
 		return ResponseEntity.ok(x);
 	}
 	
 	@DeleteMapping(path = "/{id}")
-	public ResponseEntity<?> eliminar(@PathVariable Integer id) {
-		Unidad x = service.encontrar(id);
+	public ResponseEntity<?> eliminar(@PathVariable String id) {
+		Usuario x = service.encontrar(id);
 		if(x == null)
 			return new ResponseEntity<ObjectError>(new ObjectError("id","No existe el id"), HttpStatus.NOT_FOUND);
 		service.eliminar(id);

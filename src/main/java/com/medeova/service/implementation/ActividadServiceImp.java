@@ -18,6 +18,18 @@ public class ActividadServiceImp implements ActividadService
 	
 	@Override
 	@Transactional(readOnly = true)
+	public List<Actividad> listarCompletadas() {
+		return dao.getCompletadas();
+	}
+	
+	@Override
+	@Transactional(readOnly = true)
+	public List<Actividad> listarCompletadasByUnidad(Integer id) {
+		return dao.listarCompletadasByUnidad(id);
+	}
+	
+	@Override
+	@Transactional(readOnly = true)
 	public List<Actividad> listarByTema(Integer id) {
 		return dao.findByTema(id);
 	}
@@ -44,5 +56,30 @@ public class ActividadServiceImp implements ActividadService
 	@Transactional(readOnly = true)
 	public List<Actividad> listar() {
 		return this.dao.findAll();
+	}
+
+
+	@Override
+	@Transactional(readOnly = true)
+	public List<Actividad> listarByUnidad(Integer id) {
+		return dao.findByUnidad(id);
+	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public Actividad isCompletada(Integer id) {
+		return dao.isCompletada(id);
+	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public Double getPorcentaje(Integer id) {
+		return dao.getPorcentaje(id);
+	}
+	
+	@Override
+	@Transactional(readOnly = true)
+	public Double getPromedioDificultad(Integer id) {
+		return dao.getPromedioDificultad(id);
 	}
 }

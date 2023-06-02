@@ -10,7 +10,7 @@
 		<class>com.medeova.model.Unidad</class>
 		<class>com.medeova.model.Tema</class>
 		<class>com.medeova.model.Subtema</class>
-		<class>com.medeova.model.DetalleActividadPK</class>
+		<class>com.medeova.model.DetalleActividadId</class>
 		<class>com.medeova.model.Comentario</class>
 		<class>com.medeova.model.Voto</class>
 		<class>com.medeova.model.VotoPK</class>

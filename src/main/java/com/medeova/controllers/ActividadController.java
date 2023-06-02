@@ -17,6 +17,28 @@ public class ActividadController
 	@Autowired
 	private ActividadService service;
 	
+	@GetMapping(path = "/completadas")
+	public ResponseEntity<?> getCompletadas(){
+		return ResponseEntity.ok(service.listarCompletadas());
+	}
+	
+	@GetMapping(path = "/{id}/estado")
+	public ResponseEntity<?> isCompletada(@PathVariable Integer id) {
+		if(service.isCompletada(id) == null) return ResponseEntity.ok(false);
+		return ResponseEntity.ok(true);
+	}
+	
+	@GetMapping(path = "/{id}/porcentaje")
+	public ResponseEntity<?> getPercentage(@PathVariable Integer id) {
+		return ResponseEntity.ok(service.getPorcentaje(id));
+	}
+	
+	@GetMapping(path = "/{id}/promedio")
+	public ResponseEntity<?> getAverageDifficulty(@PathVariable Integer id) {
+		return ResponseEntity.ok(service.getPromedioDificultad(id));
+	}
+	
+	
 	@GetMapping
 	public ResponseEntity<?> getAll() {	
 		return ResponseEntity.ok(service.listar());
