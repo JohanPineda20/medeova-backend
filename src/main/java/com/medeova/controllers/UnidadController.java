@@ -25,6 +25,14 @@ public class UnidadController
 	@Autowired
 	private DetalleActividadService detService;
 	
+	@GetMapping(path = "/{id}/temas")
+	public ResponseEntity<?> getTemas(@PathVariable Integer id){
+		Unidad x = service.encontrar(id);
+		if(x == null) 
+			return new ResponseEntity<ObjectError>(new ObjectError("id","No existe el id"), HttpStatus.NOT_FOUND);
+		return ResponseEntity.ok(service.listarByTema(id));
+	}
+	
 
 	@GetMapping(path = "/{id}/actividades")
 	public ResponseEntity<?> getActivities(@PathVariable Integer id){

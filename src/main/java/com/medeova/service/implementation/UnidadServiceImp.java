@@ -15,6 +15,9 @@ public class UnidadServiceImp implements UnidadService
 {
 	@Autowired
     private UnidadDAO dao;
+	
+	@Autowired
+	private TemaDAO temaDao;
     
     @Override
     @Transactional
@@ -38,5 +41,10 @@ public class UnidadServiceImp implements UnidadService
 	@Transactional(readOnly = true)
 	public List<Unidad> listar() {
 		return this.dao.findAll();
+	}
+
+	@Override
+	public List<Tema> listarByTema(Integer id) {
+		return temaDao.getTemas(id);
 	}
 }

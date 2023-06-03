@@ -37,7 +37,6 @@ public interface ActividadDAO extends JpaRepository<Actividad, Integer>
 					"COUNT(DISTINCT id_usuario) FROM detalle_rol WHERE id_rol = 2))", nativeQuery = true)
 	public List<Actividad> listarCompletadasByUnidad(@Param("id") Integer id);
 	
-	
 	@Query(value = "SELECT (SELECT COUNT(id_actividad) * 100 FROM detalle_actividad WHERE id_actividad = :id) / " +
 					"(SELECT COUNT(*) FROM detalle_rol WHERE id_rol=2)", nativeQuery = true)
 	public Double getPorcentaje(@Param("id") Integer id);

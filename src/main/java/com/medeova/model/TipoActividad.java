@@ -1,10 +1,7 @@
 package com.medeova.model;
 
 import java.io.Serializable;
-import java.util.List;
-
 import javax.persistence.*;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 @Data
@@ -22,9 +19,9 @@ public class TipoActividad implements Serializable {
 	@Column(name = "nombre")
 	private String nombre;
 	
-	@OneToMany(mappedBy = "tipoActividad", orphanRemoval = true)
+	/*@OneToMany(mappedBy = "tipoActividad", orphanRemoval = true)
     @JsonIgnore
-    private List<Actividad> actividades;
+    private List<Actividad> actividades;*/
 	
 	private static final long serialVersionUID = 1L;
 	

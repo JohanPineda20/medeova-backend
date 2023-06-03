@@ -10,4 +10,5 @@ public interface SubtemaService
     public void eliminar(Integer id);
     public Subtema encontrar(Integer id);
     public List<Subtema> listar();
+    public List<Subtema> listarByTema(Integer id);
 }

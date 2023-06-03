@@ -8,21 +8,17 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.medeova.dao.*;
 import com.medeova.model.*;
-import com.medeova.service.TemaService;
+import com.medeova.service.SubtemaService;
 
 @Service
-public class TemaServiceImp implements TemaService 
+public class SubtemaServiceImp implements SubtemaService
 {
 	@Autowired
-    private TemaDAO dao;
-	
-	@Autowired
-    private SubtemaDAO sub_dao;
-	
+    private SubtemaDAO dao;
     
     @Override
     @Transactional
-	public void guardar(Tema nuevo) {
+	public void guardar(Subtema nuevo) {
 		this.dao.save(nuevo);		
 	}
 
@@ -34,18 +30,18 @@ public class TemaServiceImp implements TemaService
 
 	@Override
 	@Transactional(readOnly = true)
-	public Tema encontrar(Integer id) {
+	public Subtema encontrar(Integer id) {
 		return this.dao.findById(id).orElse(null);
 	}
 
 	@Override
 	@Transactional(readOnly = true)
-	public List<Tema> listar() {
+	public List<Subtema> listar() {
 		return this.dao.findAll();
 	}
 
 	@Override
-	public List<Subtema> getSubtemas(Integer id) {
-		return sub_dao.getSubtemas(id);
+	public List<Subtema> listarByTema(Integer id) {
+		return dao.getSubtemas(id);
 	}
 }

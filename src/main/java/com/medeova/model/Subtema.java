@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.*;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 @Data
@@ -21,7 +20,6 @@ public class Subtema implements Serializable
 	
 	@JoinColumn(name = "id_tema", referencedColumnName = "id_tema")
 	@ManyToOne
-	@JsonIgnore
     private Tema tema;
 	
 	@Column(name = "titulo")

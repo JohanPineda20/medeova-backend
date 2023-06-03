@@ -1,12 +1,7 @@
 package com.medeova.model;
 
 import java.io.Serializable;
-import java.util.List;
-
 import javax.persistence.*;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import lombok.*;
 
 @Data
@@ -30,9 +25,9 @@ public class Unidad implements Serializable
 	@Column(name = "descripcion")
 	private String descripcion;
 	
-	@OneToMany(mappedBy = "unidad", orphanRemoval = true)
+	/*@OneToMany(mappedBy = "unidad", orphanRemoval = true)
 	@JsonIgnore
-    private List<Tema> temas;
+    private List<Tema> temas;*/
 	
 	private static final long serialVersionUID = 1L;	
 }

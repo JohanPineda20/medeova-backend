@@ -26,7 +26,15 @@ public class TemaController
 	@Autowired
 	private ActividadService actService;
 	
-
+	
+	@GetMapping(path = "{id}/subtemas")
+	public ResponseEntity<?> getSubtemas(@PathVariable Integer id){
+		Tema x = service.encontrar(id);
+		if(x == null) 
+			return new ResponseEntity<ObjectError>(new ObjectError("id","No existe el id"), HttpStatus.NOT_FOUND);
+		return ResponseEntity.ok(service.getSubtemas(id));
+	}
+	
 	@GetMapping(path = "{id}/actividades")
 	public ResponseEntity<?> getActivities(@PathVariable Integer id){
 		Tema x = service.encontrar(id);
