@@ -7,8 +7,6 @@ import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
 
 import com.medeova.model.Unidad;
-import com.medeova.service.ActividadService;
-import com.medeova.service.DetalleActividadService;
 import com.medeova.service.UnidadService;
 
 @RestController
@@ -19,11 +17,6 @@ public class UnidadController
 	@Autowired
 	private UnidadService service;
 	
-	@Autowired
-	private ActividadService actService;
-	
-	@Autowired
-	private DetalleActividadService detService;
 	
 	@GetMapping(path = "/{id}/temas")
 	public ResponseEntity<?> getTemas(@PathVariable Integer id){
@@ -39,7 +32,7 @@ public class UnidadController
 		Unidad x = service.encontrar(id);
 		if(x == null) 
 			return new ResponseEntity<ObjectError>(new ObjectError("id","No existe el id"), HttpStatus.NOT_FOUND);
-		return ResponseEntity.ok(actService.listarByUnidad(id));
+		return ResponseEntity.ok(service.getActividades(id));
 	}
 	
 	@GetMapping(path = "/{id}/actividades/completadas")
@@ -47,7 +40,7 @@ public class UnidadController
 		Unidad x = service.encontrar(id);
 		if(x == null) 
 			return new ResponseEntity<ObjectError>(new ObjectError("id","No existe el id"), HttpStatus.NOT_FOUND);
-		return ResponseEntity.ok(actService.listarCompletadasByUnidad(id));
+		return ResponseEntity.ok(service.getActividadesCompletadas(id));
 	}
 	
 	@GetMapping(path = "/{id}/actividades/avg")
@@ -55,7 +48,7 @@ public class UnidadController
 		Unidad x = service.encontrar(id);
 		if(x == null) 
 			return new ResponseEntity<ObjectError>(new ObjectError("id","No existe el id"), HttpStatus.NOT_FOUND);
-		return ResponseEntity.ok(detService.getPromedioByUnidad(id));
+		return ResponseEntity.ok(service.getPromedio(id));
 	}
 	
 	@GetMapping
@@ -94,7 +87,5 @@ public class UnidadController
 			return new ResponseEntity<ObjectError>(new ObjectError("id","No existe el id"), HttpStatus.NOT_FOUND);
 		service.eliminar(id);
 		return ResponseEntity.ok(x);
-	}
-	
-	
+	}	
 }

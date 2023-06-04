@@ -44,5 +44,9 @@ public interface ActividadDAO extends JpaRepository<Actividad, Integer>
 	@Query(value = "SELECT AVG(dificultad) FROM detalle_actividad where id_actividad = :id", nativeQuery = true)
 	public Double getPromedioDificultad(@Param("id") Integer id);
 	
+	@Query(value = "SELECT AVG(da.dificultad) FROM detalle_actividad da JOIN actividad a ON a.id_actividad " +
+					"= da.id_actividad JOIN tema t ON t.id_tema = a.id_tema WHERE t.id_unidad = :id", nativeQuery = true)
+	public Double getPromedioDificultadByUnidad(@Param("id") Integer id);
+	
 	
 }

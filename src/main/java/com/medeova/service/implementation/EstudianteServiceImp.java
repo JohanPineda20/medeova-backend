@@ -1,5 +1,6 @@
 package com.medeova.service.implementation;
 
+import java.text.DecimalFormat;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -88,6 +89,8 @@ public class EstudianteServiceImp implements EstudianteService
 	@Override
 	@Transactional(readOnly = true)
 	public Double getProgreso(String codigo) {
-		return dao.getProgreso(codigo);
+		Double x = dao.getProgreso(codigo);
+		DecimalFormat numberFormat = new DecimalFormat("#.000");
+		return Double.parseDouble(numberFormat.format(x));
 	}
 }

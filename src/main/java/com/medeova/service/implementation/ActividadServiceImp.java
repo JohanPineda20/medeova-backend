@@ -1,5 +1,6 @@
 package com.medeova.service.implementation;
 
+import java.text.DecimalFormat;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -74,12 +75,17 @@ public class ActividadServiceImp implements ActividadService
 	@Override
 	@Transactional(readOnly = true)
 	public Double getPorcentaje(Integer id) {
-		return dao.getPorcentaje(id);
+		Double x = dao.getPorcentaje(id);
+		DecimalFormat numberFormat = new DecimalFormat("#.000");
+		return Double.parseDouble(numberFormat.format(x));
 	}
 	
 	@Override
 	@Transactional(readOnly = true)
 	public Double getPromedioDificultad(Integer id) {
-		return dao.getPromedioDificultad(id);
+		Double x = dao.getPromedioDificultad(id);
+		if(x == null) return 0d;
+		DecimalFormat numberFormat = new DecimalFormat("#.000");
+		return Double.parseDouble(numberFormat.format(x));
 	}
 }
