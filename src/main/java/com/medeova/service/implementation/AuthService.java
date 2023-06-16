@@ -1,12 +1,14 @@
 package com.medeova.service.implementation;
 
 import com.medeova.config.security.JwtProvider;
-import com.medeova.dao.UsuarioRepository;
-import com.medeova.dao.VerificationTokenRepository;
-import com.medeova.dto.AuthenticationResponse;
+import com.medeova.dao.RolDAO;
+import com.medeova.dao.UsuarioDAO;
+import com.medeova.dao.VerificationTokenDAO;
+import com.medeova.dto.LoginResponse;
 import com.medeova.dto.LoginRequest;
 import com.medeova.dto.RegisterRequest;
 import com.medeova.exception.PersonalizedException;
+import com.medeova.model.Rol;
 import com.medeova.model.Usuario;
 import com.medeova.model.VerificationToken;
 import com.medeova.utils.MailService;
@@ -23,6 +25,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Instant;
+import java.util.Collections;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -32,22 +35,23 @@ import java.util.UUID;
 public class AuthService {
 
 	private final PasswordEncoder passwordEncoder;
-	private final UsuarioRepository usuarioRepository;
-	private final VerificationTokenRepository verificationTokenRepository;
+	private final UsuarioDAO usuarioDAO;
+	private final VerificationTokenDAO verificationTokenDAO;
 	private final MailService mailService;
 	private final AuthenticationManager authenticationManager;
 
+	private final RolDAO rolDAO;
 	private final UserDetailsService userDetailsService;
 	private final JwtProvider jwtProvider;
 
 	@Transactional
 	public void signup (RegisterRequest registerRequest) {
 
-		if (usuarioRepository.existsByCodigo(registerRequest.getCodigo())) {
+		if (usuarioDAO.existsByCodigo(registerRequest.getCodigo())) {
 			throw new IllegalArgumentException("El codigo ya está en uso");
 		}
 
-		if (usuarioRepository.existsByEmail(registerRequest.getEmail())) {
+		if (usuarioDAO.existsByEmail(registerRequest.getEmail())) {
 			throw new IllegalArgumentException("El correo electrónico ya está en uso");
 		}
 
@@ -61,8 +65,10 @@ public class AuthService {
 		usuario.setClave(passwordEncoder.encode(registerRequest.getPassword()));
 		usuario.setCreated(Instant.now());
 		usuario.setEnabled(false);
+		Rol rol = rolDAO.findByNombre("USER").get();
+		usuario.setRoles(Collections.singletonList(rol));
 
-		usuarioRepository.save(usuario);
+		usuarioDAO.save(usuario);
 
 		String token = generateVerificationToken(usuario);
 
@@ -77,28 +83,29 @@ public class AuthService {
 		verificationToken.setToken(token);
 		verificationToken.setUsuario(user);
 
-		verificationTokenRepository.save(verificationToken);
+		verificationTokenDAO.save(verificationToken);
 		return token;
 	}
 
+	@Transactional
     public void verifyAccount(String token) {
-		Optional<VerificationToken> verificationToken = verificationTokenRepository.findByToken(token);
+		Optional<VerificationToken> verificationToken = verificationTokenDAO.findByToken(token);
 		verificationToken.orElseThrow(() -> new PersonalizedException("Invalid Token"));
 		enableUser(verificationToken.get());
     }
 	private void enableUser(VerificationToken verificationToken) {
 		String email= verificationToken.getUsuario().getEmail();
-		Usuario usuario = usuarioRepository.findByEmail(email).orElseThrow(()->new PersonalizedException("User not found with email "+ email));
+		Usuario usuario = usuarioDAO.findByEmail(email).orElseThrow(()->new PersonalizedException("User not found with email "+ email));
 		usuario.setEnabled(true);
-		usuarioRepository.save(usuario);
+		usuarioDAO.save(usuario);
 	}
 
-	public AuthenticationResponse login(LoginRequest loginRequest){
+	public LoginResponse login(LoginRequest loginRequest){
 		UserDetails userDetails = userDetailsService.loadUserByUsername(loginRequest.getEmail()); //solo para que me genere la excepcion de UserNotFound y poder manejarlo
 		Authentication authenticate = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginRequest.getEmail(),
 				loginRequest.getPassword()));
 		SecurityContextHolder.getContext().setAuthentication(authenticate);
 		String token = jwtProvider.generateToken(authenticate);
-		return new AuthenticationResponse(token);
+		return new LoginResponse(token);
 	}
 }

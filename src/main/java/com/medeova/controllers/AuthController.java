@@ -1,6 +1,6 @@
 package com.medeova.controllers;
 
-import com.medeova.dto.AuthenticationResponse;
+import com.medeova.dto.LoginResponse;
 import com.medeova.dto.LoginRequest;
 import com.medeova.dto.RegisterRequest;
 import com.medeova.dto.RegisterResponse;
@@ -36,7 +36,7 @@ public class AuthController {
 	}
 
 	@PostMapping("/login")
-	public ResponseEntity<AuthenticationResponse> login(@Valid @RequestBody LoginRequest loginRequest) {
+	public ResponseEntity<LoginResponse> login(@Valid @RequestBody LoginRequest loginRequest) {
 	    return ResponseEntity.ok(authService.login(loginRequest));
 	}
 }

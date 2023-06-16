@@ -40,6 +40,7 @@ public class JwtProvider {
         Date expiryDate = new Date(now.getTime() + 3600000);
         return Jwts.builder()
                 .claim("id", userDetails.getCodigo())
+                .claim("rol", userDetails.getAuthorities())
                 .setSubject(userDetails.getUsername())
                 .setIssuedAt(now)
                 .setExpiration(expiryDate)

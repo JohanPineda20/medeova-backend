@@ -13,10 +13,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 
-public class DetalleActividadPK implements Serializable 
+public class DetalleActividadId implements Serializable 
 {
-	private String id_usuario;
-	private Integer id_actividad;
+	private Usuario usuario;
+	private Actividad actividad;
 		
 	private static final long serialVersionUID = 1L;
 

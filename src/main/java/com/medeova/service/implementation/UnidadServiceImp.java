@@ -15,6 +15,10 @@ public class UnidadServiceImp implements UnidadService
 {
 	@Autowired
     private UnidadDAO dao;
+	@Autowired
+	private TemaDAO temaDao;
+	@Autowired
+	private ActividadDAO actDao;
     
     @Override
     @Transactional
@@ -39,4 +43,31 @@ public class UnidadServiceImp implements UnidadService
 	public List<Unidad> listar() {
 		return this.dao.findAll();
 	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public List<Tema> listarByTema(Integer id) {
+		return temaDao.getTemas(id);
+	}
+	
+	@Override
+	@Transactional(readOnly = true)
+	public List<Actividad> getActividades(Integer id) {
+		return actDao.findByUnidad(id);
+	}
+	
+	@Override
+	@Transactional(readOnly = true)
+	public List<Actividad> getActividadesCompletadas(Integer id) {
+		return actDao.listarCompletadasByUnidad(id);
+	}
+	
+	@Override
+	@Transactional(readOnly = true)
+	public Double getPromedio(Integer id) {
+		Double x = actDao.getPromedioDificultadByUnidad(id);
+		if(x == null) return 0d;
+		return x;
+	}
+	
 }

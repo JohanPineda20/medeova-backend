@@ -93,30 +93,6 @@ CREATE TABLE IF NOT EXISTS `detalle_actividad` (
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `detalle_rol`
---
-
-DROP TABLE IF EXISTS `detalle_rol`;
-CREATE TABLE IF NOT EXISTS `detalle_rol` (
-  `id_detalle` int NOT NULL AUTO_INCREMENT,
-  `id_usuario` varchar(15) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-  `id_rol` int NOT NULL,
-  PRIMARY KEY (`id_detalle`),
-  KEY `id_user` (`id_usuario`),
-  KEY `id_rol` (`id_rol`)
-) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
---
--- Volcado de datos para la tabla `detalle_rol`
---
-
-INSERT INTO `detalle_rol` (`id_detalle`, `id_usuario`, `id_rol`) VALUES
-(1, '1151910', 2),
-(2, '1155800', 1);
-
--- --------------------------------------------------------
-
---
 -- Estructura de tabla para la tabla `multimedia`
 --
 
@@ -141,26 +117,7 @@ INSERT INTO `multimedia` (`id_multimedia`, `id_tipo`, `id_subtema`, `titulo`, `e
 (1, 1, 1, 'Primeros pasos de la teoría de la computación', 'https://www.youtube.com/embed/29Qp_AWXFt4', ''),
 (2, 2, 1, 'Introducción a la teoría de la computación', 'https://books.google.com.co/books?id=NXQE8NJw9d4C&lpg=PA1&dq=Introducci%C3%B3n%2Ba%2Bla%2BTeor%C3%ADa%2Bde%2Bla%2Bcomputaci%C3%B3n&lr&hl=es&pg=PR1&output=embed', '');
 
--- --------------------------------------------------------
 
---
--- Estructura de tabla para la tabla `rol`
---
-
-DROP TABLE IF EXISTS `rol`;
-CREATE TABLE IF NOT EXISTS `rol` (
-  `id_rol` int NOT NULL AUTO_INCREMENT,
-  `nombre` varchar(255) NOT NULL,
-  PRIMARY KEY (`id_rol`)
-) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
---
--- Volcado de datos para la tabla `rol`
---
-
-INSERT INTO `rol` (`id_rol`, `nombre`) VALUES
-(1, 'Docente'),
-(2, 'Estudiante');
 
 -- --------------------------------------------------------
 
@@ -301,19 +258,9 @@ CREATE TABLE IF NOT EXISTS `usuario` (
   PRIMARY KEY (`codigo`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
---
--- Volcado de datos para la tabla `usuario`
---
-
-INSERT INTO `usuario` (`codigo`, `per_nom`, `sdo_nom`, `per_apell`, `sdo_apell`, `email`, `clave`) VALUES
-('1151910', 'PAULA', 'VALENTINA', 'RICO', 'LINDARTE', 'paulavalentinarlin@ufps.edu.co', '12345'),
-('1155800', 'Juan', 'Carlos', 'Zapata', 'Garcia', 'docente@ufps.edu.co', '12345');
+INSERT INTO `usuario` (`codigo`, `per_nom`, `sdo_nom`, `per_apell`, `sdo_apell`, `email`, `clave`, `created`, `enabled`) VALUES ('1151000', 'Admin', NULL, 'Docente', NULL, 'admin@gmail.com', '$2a$10$zVL5fjpGFqxHJpLpFlBTg.X2BzPpqVYIgHUFddmDmDW0JIq4kCgmi', '2023-06-05 00:05:54.000000', b'1');
 
 -- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `verification_token`
---
 
 --
 -- Estructura de tabla para la tabla `verification_token`
@@ -328,11 +275,37 @@ CREATE TABLE `verification_token` (
      KEY `usuario_id` (`usuario_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
-
-
 -- -----------------------------------------------------------
 
+--
+-- Estructura de tabla para la tabla `rol`
+--
+DROP TABLE IF EXISTS `rol`;
+CREATE TABLE `rol` (
+`id` bigint(20) NOT NULL AUTO_INCREMENT,
+`nombre` varchar(255) NOT NULL,
+PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
+
+INSERT INTO `rol` (`nombre`) VALUES ('ADMIN'), ('USER');
+-- -----------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `usuarios_roles`
+--
+DROP TABLE IF EXISTS `usuarios_roles`;
+CREATE TABLE `usuarios_roles` (
+`id` bigint(20) NOT NULL AUTO_INCREMENT,
+`id_usuario` varchar(15) NOT NULL,
+`id_rol` bigint(20) NOT NULL,
+PRIMARY KEY (id),
+foreign key (id_usuario) references usuario (codigo),
+foreign key (id_rol) references rol (id)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+INSERT INTO `usuarios_roles` (`id_usuario`, `id_rol`) VALUES ('1151000', '1');
+-- ----------------------------------------------------------------
 --
 -- Estructura de tabla para la tabla `voto`
 --

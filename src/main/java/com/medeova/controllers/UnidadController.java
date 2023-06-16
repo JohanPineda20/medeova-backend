@@ -17,7 +17,40 @@ public class UnidadController
 	@Autowired
 	private UnidadService service;
 	
-	@GetMapping()
+	@GetMapping(path = "/{id}/temas")
+	public ResponseEntity<?> getTemas(@PathVariable Integer id){
+		Unidad x = service.encontrar(id);
+		if(x == null) 
+			return new ResponseEntity<ObjectError>(new ObjectError("id","No existe el id"), HttpStatus.NOT_FOUND);
+		return ResponseEntity.ok(service.listarByTema(id));
+	}
+	
+
+	@GetMapping(path = "/{id}/actividades")
+	public ResponseEntity<?> getActivities(@PathVariable Integer id){
+		Unidad x = service.encontrar(id);
+		if(x == null) 
+			return new ResponseEntity<ObjectError>(new ObjectError("id","No existe el id"), HttpStatus.NOT_FOUND);
+		return ResponseEntity.ok(service.getActividades(id));
+	}
+	
+	@GetMapping(path = "/{id}/actividades/completadas")
+	public ResponseEntity<?> getActivitiesCompleted(@PathVariable Integer id){
+		Unidad x = service.encontrar(id);
+		if(x == null) 
+			return new ResponseEntity<ObjectError>(new ObjectError("id","No existe el id"), HttpStatus.NOT_FOUND);
+		return ResponseEntity.ok(service.getActividadesCompletadas(id));
+	}
+	
+	@GetMapping(path = "/{id}/actividades/avg")
+	public ResponseEntity<?> getActivitiesAvg(@PathVariable Integer id){
+		Unidad x = service.encontrar(id);
+		if(x == null) 
+			return new ResponseEntity<ObjectError>(new ObjectError("id","No existe el id"), HttpStatus.NOT_FOUND);
+		return ResponseEntity.ok(service.getPromedio(id));
+	}
+	
+	@GetMapping
 	public ResponseEntity<?> getAll() {	
 		return ResponseEntity.ok(service.listar());
 	}
@@ -53,7 +86,5 @@ public class UnidadController
 			return new ResponseEntity<ObjectError>(new ObjectError("id","No existe el id"), HttpStatus.NOT_FOUND);
 		service.eliminar(id);
 		return ResponseEntity.ok(x);
-	}
-	
-	
+	}	
 }

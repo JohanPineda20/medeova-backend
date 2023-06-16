@@ -4,9 +4,6 @@ import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.*;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import lombok.*;
 
 @Data
@@ -23,7 +20,6 @@ public class Comentario implements Serializable
 	
 	@JoinColumn(name = "id_tema", referencedColumnName = "id_tema")
 	@ManyToOne
-	@JsonIgnore
     private Tema tema;
 	
 	@JoinColumn(name = "id_usuario", referencedColumnName = "codigo")

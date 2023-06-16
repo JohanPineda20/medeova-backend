@@ -1,11 +1,8 @@
 package com.medeova.model;
 
 import java.io.Serializable;
-import java.util.List;
 
 import javax.persistence.*;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.*;
 
@@ -23,7 +20,6 @@ public class Tema implements Serializable
 	
 	@JoinColumn(name = "id_unidad", referencedColumnName = "id_unidad")
 	@ManyToOne
-	@JsonIgnore
     private Unidad unidad;
 	
 	@Column(name = "titulo")
@@ -35,8 +31,9 @@ public class Tema implements Serializable
 	@Column(name = "descripcion")
 	private String descripcion;
 	
-	@OneToMany(mappedBy = "tema", orphanRemoval = true)
-    private List<Subtema> subtemas;
+	/*@OneToMany(mappedBy = "tema", orphanRemoval = true)
+	@JsonIgnore
+    private List<Subtema> subtemas;*/
 	
 	private static final long serialVersionUID = 1L;	
 }
