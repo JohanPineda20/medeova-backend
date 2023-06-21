@@ -16,17 +16,17 @@ public class EstudianteServiceImp implements EstudianteService
 {
 	@Autowired
 	private EstudianteDAO dao;
-	
+
 	@Autowired
 	private DetalleActividadDAO det_dao;
-	
-	
+
+
 	@Override
 	@Transactional(readOnly = true)
 	public List<Usuario> listar() {
 		return dao.findAll();
 	}
-	
+
 	@Override
 	@Transactional
     public Usuario guardar(Usuario nuevo) {
@@ -44,23 +44,12 @@ public class EstudianteServiceImp implements EstudianteService
 	public Usuario encontrar(String codigo) {
 		return dao.findById(codigo).orElse(null);
 	}
-	
+
 	@Override
 	@Transactional
 	public void eliminar(String codigo) {
 		dao.deleteById(codigo);		
 	}
-
-    @Override
-    @Transactional(readOnly = true)
-    public Usuario loginEstudiante(String email, String clave) {
-        
-        //String claveDescifrada = desencriptar(loginEstudiante.getClave(),"9sa87yh#f!gqunfp98hy!!awo098#*ahis");
-        //if(clave.equals(claveDescifrada)
-            return null;
-        
-        //return null;
-    }
 
     @Override
 	@Transactional(readOnly = true)

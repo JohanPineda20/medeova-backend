@@ -1,13 +1,15 @@
 package com.medeova.controllers;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.validation.ObjectError;
-import org.springframework.web.bind.annotation.*;
-
+import com.medeova.dto.EstudianteDTO;
 import com.medeova.model.Usuario;
 import com.medeova.service.EstudianteService;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.validation.ObjectError;
+
+
 
 @RestController
 @RequestMapping("/api/estudiante")
@@ -50,15 +52,11 @@ public class EstudianteController
 	@GetMapping(path = "/{id}")
 	public ResponseEntity<?> get(@PathVariable String id) {
 		Usuario x = service.encontrar(id);
+		EstudianteDTO estudianteDTO = new EstudianteDTO(x.getCodigo(),x.getPerNom(),
+		               x.getPerApell(), x.getSdoNom(), x.getSdoApell(), x.getEmail());
 		if(x == null) 
 			return new ResponseEntity<ObjectError>(new ObjectError("id","No existe el id"), HttpStatus.NOT_FOUND);		
-		return ResponseEntity.ok(x);
-	}
-	
-	@PostMapping
-	public ResponseEntity<?> guardar(@RequestBody Usuario nuevo) {
-		service.guardar(nuevo);
-		return ResponseEntity.ok(nuevo);
+		return ResponseEntity.ok(estudianteDTO);
 	}
 	
 	@PostMapping(path = "/{id}")
@@ -78,6 +76,5 @@ public class EstudianteController
 		service.eliminar(id);
 		return ResponseEntity.ok(x);
 	}
-	
-	
+
 }

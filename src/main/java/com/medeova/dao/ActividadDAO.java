@@ -20,25 +20,25 @@ public interface ActividadDAO extends JpaRepository<Actividad, Integer>
 	@Query(value = "SELECT a.* FROM actividad a JOIN (" +
 			"SELECT da.id_actividad FROM detalle_actividad da " +
 			"GROUP BY da.id_actividad HAVING COUNT(*) = (" +
-			"SELECT COUNT(*) FROM detalle_rol WHERE id_rol = 2)) " +
+			"SELECT COUNT(*) FROM usuarios_roles WHERE id_rol = 2)) " +
 			"AS subquery ON a.id_actividad = subquery.id_actividad", nativeQuery = true)
 	public List<Actividad> getCompletadas();
 	
 	@Query(value = "SELECT a.* FROM actividad a JOIN (" +
 					"SELECT da.id_actividad FROM detalle_actividad da WHERE da.id_actividad = :id " +
 					"GROUP BY da.id_actividad HAVING COUNT(*) = (" +
-					"SELECT COUNT(*) FROM detalle_rol WHERE id_rol = 2)) " +
+					"SELECT COUNT(*) FROM usuarios_roles WHERE id_rol = 2)) " +
 					"AS subquery ON a.id_actividad = subquery.id_actividad", nativeQuery = true)
 	public Actividad isCompletada(@Param("id") Integer id);
 	
 	@Query(value = "SELECT a.* FROM actividad a JOIN tema t ON a.id_tema = t.id_tema JOIN " +
 					"unidad u ON t.id_unidad = u.id_unidad WHERE u.id_unidad = :id AND EXISTS (SELECT 1 FROM " +
 					"detalle_actividad da WHERE da.id_actividad = a.id_actividad HAVING COUNT(*) = (SELECT "+
-					"COUNT(DISTINCT id_usuario) FROM detalle_rol WHERE id_rol = 2))", nativeQuery = true)
+					"COUNT(DISTINCT id_usuario) FROM usuarios_roles WHERE id_rol = 2))", nativeQuery = true)
 	public List<Actividad> listarCompletadasByUnidad(@Param("id") Integer id);
 	
 	@Query(value = "SELECT (SELECT COUNT(id_actividad) * 100 FROM detalle_actividad WHERE id_actividad = :id) / " +
-					"(SELECT COUNT(*) FROM detalle_rol WHERE id_rol=2)", nativeQuery = true)
+					"(SELECT COUNT(*) FROM usuarios_roles WHERE id_rol=2)", nativeQuery = true)
 	public Double getPorcentaje(@Param("id") Integer id);
 	
 	@Query(value = "SELECT AVG(dificultad) FROM detalle_actividad where id_actividad = :id", nativeQuery = true)

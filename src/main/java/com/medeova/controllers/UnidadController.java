@@ -17,7 +17,6 @@ public class UnidadController
 	@Autowired
 	private UnidadService service;
 	
-	
 	@GetMapping(path = "/{id}/temas")
 	public ResponseEntity<?> getTemas(@PathVariable Integer id){
 		Unidad x = service.encontrar(id);

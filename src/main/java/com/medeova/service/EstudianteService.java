@@ -5,14 +5,13 @@ import java.util.List;
 
 public interface EstudianteService 
 {
-	public List<Usuario> listar();
-    public Usuario guardar(Usuario nuevo);
-    public Usuario encontrar(String codigo);
-    public void eliminar(String codigo);
-    public Usuario loginEstudiante(String email, String clave);
-    public List<DetalleActividad> getActividadesDetalle(String codigo);
-    public List<DetalleActividad> getActividadesDetalleByUnidad(String codigo, Integer id);
-    public List<DetalleActividad> getActividadesDetalleByTema(String codigo, Integer id);
-    public Double getProgreso(String codigo);
-    public Double getProgresoByUnidad(String codigo, Integer id);
+    List<Usuario> listar();
+    Usuario encontrar(String codigo);
+    void eliminar(String codigo);
+    Usuario guardar(Usuario nuevo);
+    List<DetalleActividad> getActividadesDetalle(String codigo);
+    List<DetalleActividad> getActividadesDetalleByUnidad(String codigo, Integer id);
+    List<DetalleActividad> getActividadesDetalleByTema(String codigo, Integer id);
+    Double getProgreso(String codigo);
+    Double getProgresoByUnidad(String codigo, Integer id);
 }
