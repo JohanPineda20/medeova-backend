@@ -12,7 +12,5 @@
 		<class>com.medeova.model.Subtema</class>
 		<class>com.medeova.model.DetalleActividadId</class>
 		<class>com.medeova.model.Comentario</class>
-		<class>com.medeova.model.Voto</class>
-		<class>com.medeova.model.VotoPK</class>
 	</persistence-unit>
 </persistence>

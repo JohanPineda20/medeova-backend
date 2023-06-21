@@ -18,16 +18,9 @@ public class Unidad implements Serializable
 	
 	@Column(name = "titulo")
 	private String titulo;
-
-	@Column(name = "imagen")
-	private String img;
 	
 	@Column(name = "descripcion")
 	private String descripcion;
-	
-	/*@OneToMany(mappedBy = "unidad", orphanRemoval = true)
-	@JsonIgnore
-    private List<Tema> temas;*/
 	
 	private static final long serialVersionUID = 1L;	
 }

@@ -72,20 +72,18 @@ public class UnidadController
 	
 	@PostMapping(path = "/{id}")
 	public ResponseEntity<?> editar(@PathVariable Integer id, @RequestBody Unidad nuevo) {
-		Unidad x = service.encontrar(id);
-		if(x == null)
+		if(service.encontrar(id) == null)
 			return new ResponseEntity<ObjectError>(new ObjectError("id","No existe el id"), HttpStatus.NOT_FOUND);
 		
-		service.guardar(x);
-		return ResponseEntity.ok(x);
+		service.guardar(nuevo);
+		return ResponseEntity.ok(nuevo);
 	}
 	
 	@DeleteMapping(path = "/{id}")
 	public ResponseEntity<?> eliminar(@PathVariable Integer id) {
-		Unidad x = service.encontrar(id);
-		if(x == null)
+		if(service.encontrar(id) == null)
 			return new ResponseEntity<ObjectError>(new ObjectError("id","No existe el id"), HttpStatus.NOT_FOUND);
 		service.eliminar(id);
-		return ResponseEntity.ok(x);
+		return ResponseEntity.ok(id);
 	}	
 }

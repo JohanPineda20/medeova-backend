@@ -6,38 +6,16 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
 
-import com.medeova.model.Actividad;
-import com.medeova.service.ActividadService;
+import com.medeova.model.Subtema;
+import com.medeova.service.SubtemaService;
 
 @RestController
-@RequestMapping("/api/actividad")
+@RequestMapping("/api/subtema")
 @CrossOrigin(origins = "*")
-public class ActividadController 
+public class SubtemaController 
 {
 	@Autowired
-	private ActividadService service;
-	
-	@GetMapping(path = "/completadas")
-	public ResponseEntity<?> getCompletadas(){
-		return ResponseEntity.ok(service.listarCompletadas());
-	}
-	
-	@GetMapping(path = "/{id}/estado")
-	public ResponseEntity<?> isCompletada(@PathVariable Integer id) {
-		if(service.isCompletada(id) == null) return ResponseEntity.ok(false);
-		return ResponseEntity.ok(true);
-	}
-	
-	@GetMapping(path = "/{id}/porcentaje")
-	public ResponseEntity<?> getPercentage(@PathVariable Integer id) {
-		return ResponseEntity.ok(service.getPorcentaje(id));
-	}
-	
-	@GetMapping(path = "/{id}/promedio")
-	public ResponseEntity<?> getAverageDifficulty(@PathVariable Integer id) {
-		return ResponseEntity.ok(service.getPromedioDificultad(id));
-	}
-	
+	private SubtemaService service;
 	
 	@GetMapping
 	public ResponseEntity<?> getAll() {	
@@ -46,7 +24,7 @@ public class ActividadController
 	
 	@GetMapping(path = "/{id}")
 	public ResponseEntity<?> get(@PathVariable Integer id) {
-		Actividad x = service.encontrar(id);
+		Subtema x = service.encontrar(id);
 		if(x == null) 
 			return new ResponseEntity<ObjectError>(new ObjectError("id","No existe el id"), HttpStatus.NOT_FOUND);
 		
@@ -54,28 +32,32 @@ public class ActividadController
 	}
 	
 	@PostMapping
-	public ResponseEntity<?> guardar(@RequestBody Actividad nuevo) {
+	public ResponseEntity<?> guardar(@RequestBody Subtema nuevo) {
 		service.guardar(nuevo);
 		return ResponseEntity.ok(nuevo);
 	}
 	
 	@PostMapping(path = "/{id}")
-	public ResponseEntity<?> editar(@PathVariable Integer id, @RequestBody Actividad nuevo) {
+	public ResponseEntity<?> editar(@PathVariable Integer id, @RequestBody Subtema nuevo) {
 		if(service.encontrar(id) == null)
 			return new ResponseEntity<ObjectError>(new ObjectError("id","No existe el id"), HttpStatus.NOT_FOUND);
-		
+		System.out.println(nuevo.getIdSubtema());
 		service.guardar(nuevo);
 		return ResponseEntity.ok(nuevo);
 	}
 	
 	@DeleteMapping(path = "/{id}")
 	public ResponseEntity<?> eliminar(@PathVariable Integer id) {
-		Actividad x = service.encontrar(id);
-		if(x == null)
+		if(service.encontrar(id) == null)
 			return new ResponseEntity<ObjectError>(new ObjectError("id","No existe el id"), HttpStatus.NOT_FOUND);
 		service.eliminar(id);
-		return ResponseEntity.ok(x);
+		return ResponseEntity.ok(id);
 	}
 	
-	
+	@GetMapping(path = "/{id}/multimedia")
+	public ResponseEntity<?> getMultimedia(@PathVariable Integer id) {
+		if(service.encontrar(id) == null) 
+			return new ResponseEntity<ObjectError>(new ObjectError("id","No existe el id"), HttpStatus.NOT_FOUND);
+		return ResponseEntity.ok(service.getMultimedia(id));
+	}	
 }

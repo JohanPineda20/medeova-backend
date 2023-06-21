@@ -4,8 +4,6 @@ import java.io.Serializable;
 
 import javax.persistence.*;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import lombok.*;
 
 @Data
@@ -22,7 +20,6 @@ public class Multimedia implements Serializable
 	
 	@JoinColumn(name = "id_subtema", referencedColumnName = "id_subtema")
 	@ManyToOne
-	@JsonIgnore
     private Subtema subtema;
 	
 	@Column(name = "titulo")
@@ -30,9 +27,6 @@ public class Multimedia implements Serializable
 
 	@Column(name = "enlace")
 	private String url;
-	
-	@Column(name = "observacion")
-	private String observacion;
 	
 	private static final long serialVersionUID = 1L;	
 }

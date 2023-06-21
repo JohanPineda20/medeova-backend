@@ -2,6 +2,7 @@ package com.medeova.service;
 
 import java.util.List;
 
+import com.medeova.model.Multimedia;
 import com.medeova.model.Subtema;
 
 public interface SubtemaService 
@@ -11,4 +12,5 @@ public interface SubtemaService
     public Subtema encontrar(Integer id);
     public List<Subtema> listar();
     public List<Subtema> listarByTema(Integer id);
+    public List<Multimedia> getMultimedia(Integer id);
 }

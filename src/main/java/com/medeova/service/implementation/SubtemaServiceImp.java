@@ -15,6 +15,9 @@ public class SubtemaServiceImp implements SubtemaService
 {
 	@Autowired
     private SubtemaDAO dao;
+	
+	@Autowired
+	private MultimediaDAO multDao;
     
     @Override
     @Transactional
@@ -41,7 +44,14 @@ public class SubtemaServiceImp implements SubtemaService
 	}
 
 	@Override
+	@Transactional(readOnly = true)
 	public List<Subtema> listarByTema(Integer id) {
 		return dao.getSubtemas(id);
+	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public List<Multimedia> getMultimedia(Integer id) {
+		return multDao.getMultimediaBySubtema(id);
 	}
 }

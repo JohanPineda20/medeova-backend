@@ -16,10 +16,6 @@ public class Actividad implements Serializable
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer idActividad;
 	
-	@JoinColumn(name = "id_tipo", referencedColumnName = "id_tipo")
-	@ManyToOne
-    private TipoActividad tipoActividad;
-	
 	@JoinColumn(name = "id_tema", referencedColumnName = "id_tema")
 	@ManyToOne
     private Tema tema;

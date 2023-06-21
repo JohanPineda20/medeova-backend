@@ -8,21 +8,18 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.medeova.dao.*;
 import com.medeova.model.*;
-import com.medeova.service.TemaService;
+import com.medeova.service.MultimediaService;
 
 @Service
-public class TemaServiceImp implements TemaService 
+public class MultimediaServiceImp implements MultimediaService 
 {
 	@Autowired
-    private TemaDAO dao;
-	
-	@Autowired
-    private SubtemaDAO sub_dao;
+    private MultimediaDAO dao;
 	
     
     @Override
     @Transactional
-	public void guardar(Tema nuevo) {
+	public void guardar(Multimedia nuevo) {
 		this.dao.save(nuevo);		
 	}
 
@@ -34,19 +31,13 @@ public class TemaServiceImp implements TemaService
 
 	@Override
 	@Transactional(readOnly = true)
-	public Tema encontrar(Integer id) {
+	public Multimedia encontrar(Integer id) {
 		return this.dao.findById(id).orElse(null);
 	}
 
 	@Override
 	@Transactional(readOnly = true)
-	public List<Tema> listar() {
+	public List<Multimedia> listar() {
 		return this.dao.findAll();
-	}
-
-	@Override
-	@Transactional(readOnly = true)
-	public List<Subtema> getSubtemas(Integer id) {
-		return sub_dao.getSubtemas(id);
 	}
 }
