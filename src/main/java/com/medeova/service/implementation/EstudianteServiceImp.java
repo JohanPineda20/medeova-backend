@@ -82,4 +82,10 @@ public class EstudianteServiceImp implements EstudianteService
 		DecimalFormat numberFormat = new DecimalFormat("#.000");
 		return Double.parseDouble(numberFormat.format(x));
 	}
+
+	@Override
+	@Transactional
+	public DetalleActividad completarActividad(DetalleActividad nuevo) {
+		return det_dao.save(nuevo);
+	}
 }

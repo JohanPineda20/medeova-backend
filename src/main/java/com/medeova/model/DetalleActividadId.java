@@ -15,8 +15,8 @@ import lombok.NoArgsConstructor;
 
 public class DetalleActividadId implements Serializable 
 {
-	private Usuario usuario;
-	private Actividad actividad;
+	private Integer actividad;
+	private String usuario;
 		
 	private static final long serialVersionUID = 1L;
 

@@ -9,19 +9,19 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@IdClass(DetalleActividadId.class) 
+@IdClass(DetalleActividadId.class)
 @Table(name = "detalle_actividad")
 public class DetalleActividad implements Serializable
 {	
 	@Id
-	@JoinColumn(name = "id_usuario", referencedColumnName = "codigo")
-	@ManyToOne
-	private Usuario usuario;
-	
-	@Id
 	@JoinColumn(name = "id_actividad", referencedColumnName = "id_actividad")
 	@ManyToOne
 	private Actividad actividad;
+	
+	@Id
+	@JoinColumn(name = "id_usuario", referencedColumnName = "codigo")
+	@ManyToOne
+	private Usuario usuario;
 	
 	@Column(name = "dificultad")
 	private Integer dificultad;

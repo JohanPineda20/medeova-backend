@@ -9,6 +9,8 @@ public interface EstudianteService
     Usuario encontrar(String codigo);
     void eliminar(String codigo);
     Usuario guardar(Usuario nuevo);
+    DetalleActividad completarActividad(DetalleActividad nuevo);
+    //DetalleActividad getByEstudianteAndActividad(DetalleActividadID id);
     List<DetalleActividad> getActividadesDetalle(String codigo);
     List<DetalleActividad> getActividadesDetalleByUnidad(String codigo, Integer id);
     List<DetalleActividad> getActividadesDetalleByTema(String codigo, Integer id);

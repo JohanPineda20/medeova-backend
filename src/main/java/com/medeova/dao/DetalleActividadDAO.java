@@ -15,7 +15,7 @@ public interface DetalleActividadDAO extends JpaRepository<DetalleActividad, Det
 	List<DetalleActividad> findByActividad(Integer actividad);
 	
 	@Query(value = "SELECT ALL * FROM detalle_actividad WHERE id_actividad = :id", nativeQuery = true)
-    public List<DetalleActividad> findIdActividad(@Param("id") Integer id);
+    public List<DetalleActividad> findByIdActividad(@Param("id") Integer id);
 	
 	@Query(value = "SELECT ALL * FROM detalle_actividad WHERE id_usuario = :id", nativeQuery = true)
     public List<DetalleActividad> findByEstudiante(@Param("id") String id);
