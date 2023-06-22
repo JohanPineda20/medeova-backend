@@ -38,11 +38,10 @@ public class ComentarioController
 	
 	@DeleteMapping(path = "/{id}")
 	public ResponseEntity<?> eliminar(@PathVariable Integer id) {
-		Comentario x = service.encontrar(id);
-		if(x == null)
+		if(service.encontrar(id) == null)
 			return new ResponseEntity<ObjectError>(new ObjectError("id","No existe el id"), HttpStatus.NOT_FOUND);
 		service.eliminar(id);
-		return ResponseEntity.ok(x);
+		return ResponseEntity.ok(id);
 	}
 	
 	
