@@ -5,8 +5,6 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
@@ -57,7 +55,8 @@ public class JwtProvider {
     }
 
     // Valida la firma y expiracion de un token
-    public boolean validateToken(String token) {
+    @SuppressWarnings("deprecation")
+	public boolean validateToken(String token) {
         try {
             Jws<Claims> claims = Jwts.parser().setSigningKey(getPrivateKey()).parseClaimsJws(token);
             return !claims.getBody().getExpiration().before(new Date());
@@ -68,7 +67,8 @@ public class JwtProvider {
     }
 
     // Obtiene el nombre de usuario a partir del token
-    public String getUsernameFromToken(String token) {
+    @SuppressWarnings("deprecation")
+	public String getUsernameFromToken(String token) {
         Claims claims = Jwts.parser().setSigningKey(getPrivateKey()).parseClaimsJws(token).getBody();
         return claims.getSubject();
     }

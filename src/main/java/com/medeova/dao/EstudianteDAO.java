@@ -10,7 +10,7 @@ import com.medeova.model.*;
 
 public interface EstudianteDAO extends JpaRepository<Usuario, String>
 {
-	@Query(value = "SELECT ALL * FROM usuario u JOIN usuarios_roles dr ON dr.id_usuario = u.codigo WHERE dr.id_rol = 2", nativeQuery = true)
+	@Query(value = "SELECT ALL * FROM usuario u JOIN usuarios_roles dr ON dr.id_usuario = u.codigo WHERE dr.id_rol = 2 ORDER BY u.codigo", nativeQuery = true)
 	List<Usuario> findAll();
 	
 	@Query(value = "SELECT (SELECT COUNT(id_actividad)*100 FROM detalle_actividad WHERE id_usuario = :id)/ (SELECT COUNT(*) FROM actividad)", nativeQuery = true)

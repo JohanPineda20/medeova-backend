@@ -1,6 +1,5 @@
 package com.medeova.controllers;
 
-import com.medeova.dao.DetalleActividadDAO;
 import com.medeova.dto.EstudianteDTO;
 import com.medeova.model.DetalleActividad;
 import com.medeova.model.DetalleActividadId;
@@ -23,9 +22,6 @@ public class EstudianteController
 	@Autowired
 	private EstudianteService service;
 	
-	@Autowired
-	private DetalleActividadDAO dao;
-	
 	
 	@PostMapping(path = "/detactividad")
 	public ResponseEntity<?> completarActividad(@RequestBody DetalleActividad nuevo) {
@@ -34,7 +30,7 @@ public class EstudianteController
 	
 	@PostMapping(path = "/detactividad/completada")
 	public ResponseEntity<?> isCompletadaActividad(@RequestBody DetalleActividadId id) {
-		return ResponseEntity.ok(dao.findById(id).orElse(null));
+		return ResponseEntity.ok(service.isCompletada(id));
 	}
 	
 	@GetMapping(path = "/{id}/actividades")

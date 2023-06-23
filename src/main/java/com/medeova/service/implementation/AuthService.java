@@ -101,6 +101,7 @@ public class AuthService {
 	}
 
 	public LoginResponse login(LoginRequest loginRequest){
+		@SuppressWarnings("unused")
 		UserDetails userDetails = userDetailsService.loadUserByUsername(loginRequest.getEmail()); //solo para que me genere la excepcion de UserNotFound y poder manejarlo
 		Authentication authenticate = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginRequest.getEmail(),
 				loginRequest.getPassword()));

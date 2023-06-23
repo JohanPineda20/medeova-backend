@@ -84,8 +84,14 @@ public class EstudianteServiceImp implements EstudianteService
 	}
 
 	@Override
-	@Transactional
+	@Transactional(readOnly = true)
 	public DetalleActividad completarActividad(DetalleActividad nuevo) {
 		return det_dao.save(nuevo);
+	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public DetalleActividad isCompletada(DetalleActividadId id) {
+		return det_dao.findById(id).orElse(null);
 	}
 }

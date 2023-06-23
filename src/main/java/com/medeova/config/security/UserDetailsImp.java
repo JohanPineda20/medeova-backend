@@ -2,11 +2,8 @@ package com.medeova.config.security;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.util.Assert;
 
 import java.util.Collection;
-import java.util.Collections;
-import java.util.Set;
 
 public class UserDetailsImp implements UserDetails {
 
@@ -75,5 +72,7 @@ public class UserDetailsImp implements UserDetails {
     public boolean isCredentialsNonExpired() {
         return this.credentialsNonExpired;
     }
+    
+    private static final long serialVersionUID = 1L;
 
 }
