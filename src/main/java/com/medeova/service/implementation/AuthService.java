@@ -74,7 +74,7 @@ public class AuthService {
 
 		mailService.sendMail(new NotificationEmail("Activación de cuenta MEDEOVA",usuario.getEmail(),"Gracias por registrarte a MEDEOVA, " +
 				"por favor clic en el enlace para verificar la cuenta: " +
-				"http://localhost:8080/api/auth/accountVerification/" + token));
+				"https://medeova-backend-production.up.railway.app/api/auth/accountVerification/" + token));
 	}
 
 	private String generateVerificationToken(Usuario user) {

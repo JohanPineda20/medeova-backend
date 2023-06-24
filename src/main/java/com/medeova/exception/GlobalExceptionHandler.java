@@ -42,7 +42,7 @@ public class GlobalExceptionHandler {
     public ResponseEntity<String> handleBadCredentialsException(BadCredentialsException ex) {
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Contraseña incorrecta");
     }
-    @ExceptionHandler(DisabledException.class)
+    @ExceptionHandler(DisabledException.class) //excepcion de usuario deshabilitado porque no ha verificado la cuenta por correo
     public ResponseEntity<String> handleDisabledException(DisabledException ex) {
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Debes validar la cuenta primero antes de iniciar sesion");
     }
